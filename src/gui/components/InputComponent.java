@@ -28,7 +28,9 @@ public class InputComponent extends JPanel {
             monedas[i] = new JTextField();
             monedas[i].setPreferredSize(new Dimension(30,20));
             monedas[i].setHorizontalAlignment(JTextField.CENTER);
-            monedas[i].setFont(new Font("Arial", Font.BOLD, 15));
+            monedas[i].setBackground(new Color(108,117,125));
+            monedas[i].setForeground(Color.WHITE);
+            monedas[i].setFont(new Font("Arial", Font.BOLD, 20));
             this.add(monedas[i]);
         }
 

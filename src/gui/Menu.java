@@ -14,7 +14,6 @@ import javax.swing.JScrollPane;
 
 //Componentes
 import gui.components.InputComponent;
-import java.awt.Color;
 
 //Elementos Decoratvos
 import java.awt.Dimension;
@@ -22,6 +21,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.*;
+import java.awt.Color;
+
+//Logica
+import logic.CambioMoneda;
 
 
 public class Menu extends JFrame implements ActionListener {
@@ -36,7 +39,7 @@ public class Menu extends JFrame implements ActionListener {
 
     public Menu() {
         ANCHO = 1200;
-        ALTO = 750;
+        ALTO = 500;
         btnStart = new JButton("Iniciar");
         btnCampos = new JButton("Generar Campos");
         btnLimpiar = new JButton("Limpiar Campos");
@@ -49,29 +52,36 @@ public class Menu extends JFrame implements ActionListener {
     }
 
     public void initElements() {
+        
+        this.getContentPane().setBackground(new Color(52,58,64));
 
         panelUno.setSize(new Dimension(ANCHO - 100, 175));
-        panelUno.setBackground(Color.GRAY);
+        panelUno.setBackground(new Color(108,117,125));
         panelUno.setBorder(new BevelBorder(BevelBorder.LOWERED));
         panelUno.setLocation(50, 100);
         panelUno.setLayout(null);
 
         btnStart.setSize(new Dimension(200, 50));
-        btnStart.setLocation((this.getWidth() - btnStart.getWidth()) / 2, 600);
+        btnStart.setLocation((this.getWidth() - btnStart.getWidth()) / 2, 410);
         btnStart.setFocusable(false);
         btnStart.setFont(new Font("Arial", Font.BOLD, 25));
+        btnStart.setBackground(new Color(108,117,125));
+        btnStart.setForeground(Color.WHITE);
         btnStart.addActionListener(this);
         add(btnStart);
 
         title.setSize(new Dimension(700, 100));
         title.setLocation(((this.getWidth() - title.getWidth()) / 2) + 75, 5);
         title.setFont(new Font("Arial", Font.BOLD, 25));
+        title.setForeground(Color.WHITE);
         add(title);
 
         btnCampos.setSize(new Dimension(200, 35));
         btnCampos.setLocation((panelUno.getWidth() - btnCampos.getWidth()) / 2, 75);
         btnCampos.setFocusable(false);
         btnCampos.setFont(new Font("Arial", Font.BOLD, 16));
+        btnCampos.setBackground(new Color(52,58,64));
+        btnCampos.setForeground(Color.WHITE);
         btnCampos.addActionListener(this);
         panelUno.add(btnCampos);
 
@@ -79,27 +89,35 @@ public class Menu extends JFrame implements ActionListener {
         btnLimpiar.setLocation((panelUno.getWidth() - btnCampos.getWidth()) / 2, 120);
         btnLimpiar.setFocusable(false);
         btnLimpiar.setFont(new Font("Arial", Font.BOLD, 16));
+        btnLimpiar.setBackground(new Color(52,58,64));
+        btnLimpiar.setForeground(Color.WHITE);
         btnLimpiar.addActionListener(this);
         panelUno.add(btnLimpiar);
 
         txtValorCambio.setSize(new Dimension(200, 30));
         txtValorCambio.setLocation(800, 20);
         txtValorCambio.setFont(new Font("Arial", Font.BOLD, 20));
+        txtValorCambio.setForeground(Color.WHITE);
         panelUno.add(txtValorCambio);
 
         txtNumeroMonedas.setSize(new Dimension(250, 30));
         txtNumeroMonedas.setLocation(50, 20);
         txtNumeroMonedas.setFont(new Font("Arial", Font.BOLD, 20));
+        txtNumeroMonedas.setForeground(Color.WHITE);
         panelUno.add(txtNumeroMonedas);
 
         inputNumeroMonedas.setSize(30, 30);
         inputNumeroMonedas.setLocation(275, 20);
         inputNumeroMonedas.setHorizontalAlignment(SwingConstants.CENTER);
+        inputNumeroMonedas.setBackground(new Color(52,58,64));
+        inputNumeroMonedas.setForeground(Color.YELLOW);
         panelUno.add(inputNumeroMonedas);
 
         inputValorCambia.setSize(30, 30);
         inputValorCambia.setLocation(1000, 20);
         inputValorCambia.setHorizontalAlignment(SwingConstants.CENTER);
+        inputValorCambia.setBackground(new Color(52,58,64));
+        inputValorCambia.setForeground(Color.YELLOW);
         panelUno.add(inputValorCambia);
 
         add(panelUno);
@@ -113,6 +131,7 @@ public class Menu extends JFrame implements ActionListener {
         setIconImage(icon);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(new Dimension(ANCHO, ALTO));
+        setResizable(false);
         initElements();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -120,6 +139,10 @@ public class Menu extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
+        
+         int numeroMonedas = 0;
+         int valorCambio = 0;
+                 
         if (event.getSource() == btnLimpiar) {
 
             listaMonedas.removeInputElements();
@@ -130,7 +153,7 @@ public class Menu extends JFrame implements ActionListener {
         } else if (event.getSource() == btnCampos) {
 
             try {
-                int numeroMonedas = Integer.parseInt(inputNumeroMonedas.getText());
+                numeroMonedas = Integer.parseInt(inputNumeroMonedas.getText());
                 listaMonedas = new InputComponent(numeroMonedas, ANCHO-20, 100);
                 listaMonedas.initInputElements();
 
@@ -149,7 +172,20 @@ public class Menu extends JFrame implements ActionListener {
             }
 
         } else if (event.getSource() == btnStart) {
-            System.out.println("3");
+            try{
+                numeroMonedas = Integer.parseInt(inputNumeroMonedas.getText());
+                valorCambio = Integer.parseInt(inputValorCambia.getText());
+                
+                CambioMoneda cambio = new CambioMoneda(listaMonedas.getArticulos(), numeroMonedas, valorCambio);
+                cambio.initMatrizNumeros();
+                
+                Resultado ventana = new Resultado(cambio);
+                ventana.initTemplate();
+            
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Ingrese numeros", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
         }
     }
 
