@@ -28,7 +28,7 @@ public class Resultado extends JFrame implements ActionListener {
     private JButton btnItems;
 
     public Resultado(CambioMoneda controller) {
-        ancho = 1300;
+        ancho = 1400;
         alto = 600;
         panel = new JPanel();
         btnItems = new JButton("Resultado");
@@ -88,6 +88,7 @@ public class Resultado extends JFrame implements ActionListener {
         for (int i = 0; i < result.length; i++) {
             for (int j = 0; j < result[i].length; j++) {
                 result[i][j].setPreferredSize(new Dimension(60,45));
+                result[i][j].setMaximumSize(new Dimension(60,145));
                 result[i][j].setHorizontalAlignment(JLabel.CENTER);
                 result[i][j].setFont(new Font("Arial", Font.BOLD, 15));
                 result[i][j].setForeground(Color.white);

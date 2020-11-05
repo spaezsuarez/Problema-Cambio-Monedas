@@ -92,33 +92,5 @@ public class CambioMoneda {
         }
     }
     
-    public void results(int numeroMonedas,int valorCambio){
-        int i = numeroMonedas,j = valorCambio;
-        
-        while(i > 1 && j > 1){
-            if(matrizNumeros[i][j] == matrizNumeros[i-1][j]){
-                i--;
-            }else if(matrizNumeros[i][j] == 1+matrizNumeros[i][j-(int)monedas[i-1]]){
-                
-                //Entegrar moneda
-                j-=(int)monedas[i-1];
-                
-            }
-        }
-    }
-    
-    public void imprimir(){
-        
-        for(int i = 0; i < matrizNumeros.length; i++){
-            for(int j = 0; j < matrizNumeros[0].length; j++ ){
-                System.out.print(matrizNumeros[i][j] + " ");
-                
-            }
-            System.out.println("\n");
-        }
-
-        System.out.println("\n");
-    }
-    
     
 }
