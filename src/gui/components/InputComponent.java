@@ -31,6 +31,7 @@ public class InputComponent extends JPanel {
             monedas[i].setBackground(new Color(108,117,125));
             monedas[i].setForeground(Color.WHITE);
             monedas[i].setFont(new Font("Arial", Font.BOLD, 20));
+            monedas[i].setCaretColor(Color.white);
             this.add(monedas[i]);
         }
 

@@ -27,6 +27,15 @@ public class CambioMoneda {
             monedas[i] = Double.parseDouble(elements[i].getText());
         }
         
+        for (int i = 0; i < monedas.length - 1; i++) {
+            for (int j = i + 1; j < monedas.length; j++) {
+                if (monedas[i] > monedas[j]) {
+                    double monedaTemp = monedas[i];
+                    monedas[i] = monedas[j];
+                    monedas[j] = monedaTemp;
+                }
+            }
+        }
     }
     
     
@@ -36,10 +45,12 @@ public class CambioMoneda {
         setMonedas(elements);
     }
     
-    public double min(double num1,double num2){
+    public double min(double num1,double num2,int i,int j){
         if(num1 < num2){
+            matrizComposicion[i][j] = String.valueOf(matrizComposicion[i-1][j]);
             return num1;
         }
+        matrizComposicion[i][j] = String.valueOf("1:"+(int)monedas[i-1]+"+\n"+matrizComposicion[i][j - (int)monedas[i-1]]);
         return num2;
     }
     
@@ -47,14 +58,18 @@ public class CambioMoneda {
         
         for(int k = 0; k < matrizNumeros[0].length; k++){
             matrizNumeros[0][k] = Double.POSITIVE_INFINITY;
-            matrizComposicion[0][k] = "0:0";
         }
         
         for(int z = 1; z < matrizNumeros.length; z++){
             matrizNumeros[z][0] = 0;
+            matrizComposicion[z][0] = "0:0";
         }
         
-        
+        for(int i = 0; i < matrizComposicion.length; i++){
+            for(int j = 0; j < matrizComposicion[i].length;j++){
+                matrizComposicion[i][j] = "0:0";
+            }
+        }
         
         for(int i = 1; i < matrizNumeros.length; i++){
             for(int j = 1; j < matrizNumeros[0].length; j++ ){
@@ -62,17 +77,34 @@ public class CambioMoneda {
                 if(i == 1 &&  j < monedas[i-1]){
                     matrizNumeros[i][j] = Double.POSITIVE_INFINITY;
                 }else if(i == 1){
-                    matrizNumeros[i][j] = 1 + matrizNumeros[1][j-(int)monedas[i-1]];
+                    matrizNumeros[i][j] = 1 + matrizNumeros[1][j-(int)monedas[0]];
+                    matrizComposicion[i][j] = String.valueOf("1:"+(int)monedas[0]+"+\n"+matrizComposicion[1][j - (int)monedas[0]]);
+                        
                 }else if(j < monedas[i-1]){
                     matrizNumeros[i][j] = matrizNumeros[i-1][j];
                     matrizComposicion[i][j] = matrizComposicion[i-1][j];
+                    
                 }else{
-                    matrizNumeros[i][j] = min(matrizNumeros[i-1][j],1+matrizNumeros[i][j-(int)monedas[i-1]]);
-                }
+                    matrizNumeros[i][j] = min(matrizNumeros[i-1][j],1+matrizNumeros[i][j-(int)monedas[i-1]],i,j);
+                    
+                }   
             }
         }
+    }
+    
+    public void results(int numeroMonedas,int valorCambio){
+        int i = numeroMonedas,j = valorCambio;
         
-        
+        while(i > 1 && j > 1){
+            if(matrizNumeros[i][j] == matrizNumeros[i-1][j]){
+                i--;
+            }else if(matrizNumeros[i][j] == 1+matrizNumeros[i][j-(int)monedas[i-1]]){
+                
+                //Entegrar moneda
+                j-=(int)monedas[i-1];
+                
+            }
+        }
     }
     
     public void imprimir(){

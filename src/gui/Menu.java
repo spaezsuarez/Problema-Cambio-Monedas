@@ -111,6 +111,7 @@ public class Menu extends JFrame implements ActionListener {
         inputNumeroMonedas.setHorizontalAlignment(SwingConstants.CENTER);
         inputNumeroMonedas.setBackground(new Color(52,58,64));
         inputNumeroMonedas.setForeground(Color.YELLOW);
+        inputNumeroMonedas.setCaretColor(Color.YELLOW);
         panelUno.add(inputNumeroMonedas);
 
         inputValorCambia.setSize(30, 30);
@@ -118,6 +119,7 @@ public class Menu extends JFrame implements ActionListener {
         inputValorCambia.setHorizontalAlignment(SwingConstants.CENTER);
         inputValorCambia.setBackground(new Color(52,58,64));
         inputValorCambia.setForeground(Color.YELLOW);
+        inputValorCambia.setCaretColor(Color.YELLOW);
         panelUno.add(inputValorCambia);
 
         add(panelUno);

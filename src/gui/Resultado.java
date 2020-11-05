@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.event.*;
 import javax.swing.JScrollPane;
 import logic.CambioMoneda;
+import java.util.ArrayList;
 
 public class Resultado extends JFrame implements ActionListener {
 
@@ -120,6 +122,58 @@ public class Resultado extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
+        
+        String respuestaDos = composiciones[composiciones.length-1][composiciones[0].length-1];
+        String respuestaFinal = "";
+
+        String[] elementos = respuestaDos.split("\\+");
+        ArrayList<Integer> numeros = new ArrayList<>(),posiciones = new ArrayList<>();
+        
+        
+        for(String s: elementos){
+            String[] temp = s.split(":");
+            if((!temp[0].equals("0")) && (!temp[1].equals("0")) ){
+               if(!numeros.contains(Integer.parseInt(temp[1]))){
+                numeros.add(Integer.parseInt(temp[1]));
+                posiciones.add(0);
+               }
+                
+                
+            }
+                
+        }
+        
+        for (int i = 0; i < numeros.size() - 1; i++) {
+            for (int j = i + 1; j < numeros.size(); j++) {
+                if (numeros.get(i) > numeros.get(j)) {
+                    int monedaTemp = numeros.get(i);
+                    numeros.set(i,numeros.get(j));
+                    numeros.set(j,monedaTemp);
+                }
+            }
+        }
+        
+        for(String s: elementos){
+            String[] temp = s.split(":");
+            if((!temp[0].equals("0")) && (!temp[1].equals("0")) ){
+                posiciones.set(numeros.indexOf(Integer.parseInt(temp[1])),posiciones.get(numeros.indexOf(Integer.parseInt(temp[1])))+1);
+            }
+                
+        }
+        
+        for(int k = 0; k < numeros.size(); k++){
+            if(posiciones.get(k) == 1){
+                respuestaFinal += posiciones.get(k)+" moneda de $"+numeros.get(k)+"\n";
+            }else{
+                respuestaFinal += posiciones.get(k)+" monedas de $"+numeros.get(k)+"\n";
+            }
+            
+        }
+        
+        JOptionPane.showMessageDialog(null, respuestaFinal,"Su cambio es" ,JOptionPane.DEFAULT_OPTION);
+        
+        
+        
     }
 
 }
