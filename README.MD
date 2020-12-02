@@ -18,4 +18,7 @@ compilar la clase main con `javac Main.java -d build`
 Posteriormente entrar a la carpeta bin con `cd build` y ejecutar la clase Main con `java Main`
 
 
-# Muestras de la aplicacion
+## Muestras de la aplicacion
+![](doc/Menu.png)
+
+![](doc/Result.png)
