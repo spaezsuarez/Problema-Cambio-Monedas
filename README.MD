@@ -1,6 +1,6 @@
 # Problema Cambio de monedas
 
-Esta es una implementacion para resolver el problema de cambio de monedas con programacion dinamica.
+Resolucion del problema de cambio de monedas con programación dinámica.
 
 ## Autor
 
